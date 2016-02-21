@@ -44,8 +44,7 @@
 			  </div>
 			  <div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="@CurrentPage.AncestorOrSelf(1).Url">@CurrentPage.AncestorOrSelf(1).Name</a></li>
-					<li><a href="/">Home</a></li>
+					<li><a href="@CurrentPage.AncestorOrSelf(1).Url">Home</a></li>
 
 					@foreach(var page in CurrentPage.AncestorOrSelf(1).Children){
 						<li><a href="@page.Url">Home</a></li>
@@ -59,7 +58,7 @@
 						  Our Projects 
 						  <span class="caret"></span></a>
 					  <ul class="dropdown-menu">
-						@foreach(var page in CurrentPage.AncestorOrSelf(1).Children.Where("DocumentTypeAlias=\"projectsMain\"").First().Children){
+						@foreach(var page in CurrentPage.AncestorOrSelf(1).Children.Where("DocumentTypeAlias=\"projectsMain\"").First().Children.Where("Visible")){
 							
 							var test =  umbraco.library.GetPreValueAsString(page.projectStatus);
 							

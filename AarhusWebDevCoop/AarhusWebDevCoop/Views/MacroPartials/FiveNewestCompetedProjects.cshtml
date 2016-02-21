@@ -1,0 +1,16 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+	<ul>
+	@{
+		var projects = CurrentPage.AncestorOrSelf(1).Children.Where("DocumentTypeAlias = \"projectsMain\"").First().Children.OrderBy("createDate desc");
+		
+		foreach(var page in projects.Take(5)){
+			
+			var currentProjectStatus =  umbraco.library.GetPreValueAsString(page.projectStatus);
+							
+				if (currentProjectStatus == "Completed"){
+					<li><a href="@page.Url">@page.Name</a></li>
+				}
+			}
+	}
+	</ul>
