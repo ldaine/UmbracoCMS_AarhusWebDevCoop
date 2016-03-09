@@ -43,23 +43,40 @@
 				</button>
 			  </div>
 			  <div id="navbar" class="navbar-collapse collapse">
+				  @{var root = CurrentPage.AncestorOrSelf(1);}  
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="@CurrentPage.AncestorOrSelf(1).Url">Home</a></li>
+					<li class="@((CurrentPage.Name == root.Name) ? "active" : null)">
+						<a href="@root.Url">Home</a>
+					</li>
 
-					@foreach(var page in CurrentPage.AncestorOrSelf(1).Children){
-						<li><a href="@page.Url">Home</a></li>
+					@foreach(var page in root.Children){
+						<li class="@(page.IsAncestorOrSelf(CurrentPage) ? "active": null)">
+							<a href="@page.Url">@page.Name</a>
+						</li>
 					}
 				  
-				  <li class="dropdown">
+					<!-- DROP DOWN MENU-->
+					@{var umbracoDropdown = 
+							root
+							.Children
+							.Where("DocumentTypeAlias=\"projectsMain\"")
+							.First()
+							.Children
+							.Where("Visible")
+							.OrderBy("Name");
+					 }
+					<li class="dropdown">
 					  <a href="#" class="dropdown-toggle" 
 						  data-toggle="dropdown" 
 						  role="button" 
 						  aria-haspopup="true" aria-expanded="false">
 						  Our Projects 
-						  <span class="caret"></span></a>
-					  <ul class="dropdown-menu">
-						@foreach(var page in CurrentPage.AncestorOrSelf(1).Children.Where("DocumentTypeAlias=\"projectsMain\"").First().Children.Where("Visible")){
-							
+						  <span class="caret"></span>
+					</a>
+					
+					<ul class="dropdown-menu">
+						@foreach(var page in umbracoDropdown){
+							//Displaying only projects, which are completed
 							var test =  umbraco.library.GetPreValueAsString(page.projectStatus);
 							
 							if (test == "Completed"){

@@ -1,0 +1,33 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+ 
+	<h4>Site Map</h4>
+	
+	@{var root = CurrentPage.AncestorOrSelf(1);} 
+
+	<ul>		
+		<li><a href="@root.Url">@root.Name</a></li>
+		<li>
+			@TraverseHelper(root.Id)
+		</li>
+	</ul>
+
+@helper TraverseHelper(int rootId)
+{
+	var childrenPages = Umbraco.Content(rootId).Children;
+	<ul>
+    @foreach(var page in childrenPages){
+		if(page.Name!="Site Map"){
+		<li><a href="@page.Url">@page.Name</a></li>
+			if(page.Children.Count() >0){
+				<li>
+					@TraverseHelper(page.Id)
+				</li>
+			}
+		}
+	}
+	</ul>
+	
+}
+
+
+
