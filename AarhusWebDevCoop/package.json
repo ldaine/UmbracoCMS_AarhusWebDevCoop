@@ -1,8 +1,12 @@
-{"name": "App",
+{
+  "name": "package",
   "version": "1.0.0",
-  "description": "",
-	"dependencies": {
-		"gulp": "^3.9.1", 
-		"gulp-sass": "^2.2.0"
-	  }
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.2.0"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
 }
