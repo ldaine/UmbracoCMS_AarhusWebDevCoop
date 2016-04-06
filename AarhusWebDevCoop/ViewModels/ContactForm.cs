@@ -12,6 +12,7 @@ namespace AarhusWebDevCoop.ViewModels
         public string Name { get; set; }
 
         [Required]
+        [EmailAddress(ErrorMessage="This is not a valid Email Address")]
         public string Email { get; set; }
 
         [Required]

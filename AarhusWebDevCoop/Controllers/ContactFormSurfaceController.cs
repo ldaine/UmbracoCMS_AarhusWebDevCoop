@@ -20,20 +20,22 @@ namespace AarhusWebDevCoop.Controllers
         [HttpPost]
         public ActionResult HandleFormSubmit(ContactForm model)
         {
+            if (!ModelState.IsValid) { return CurrentUmbracoPage(); }
+
             MailMessage message = new MailMessage();
-            message.To.Add("liga.daine@gmail.com");
+            message.To.Add("cqtkbnns@gmail.com");
             message.Subject = model.Subject;
-            message.From = new MailAddress(model.Email, model.Name); 
+            message.From = new MailAddress(model.Email, model.Name);
             message.Body = model.Message;
 
-            using(SmtpClient smtp = new SmtpClient())
+            using (SmtpClient smtp = new SmtpClient())
             {
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.UseDefaultCredentials = false;
                 smtp.EnableSsl = true;
                 smtp.Host = "smtp.gmail.com";
                 smtp.Port = 587;
-                smtp.Credentials = new System.Net.NetworkCredential("liga.daine@gmail.com", "node1024");
+                smtp.Credentials = new System.Net.NetworkCredential("cqtkbnns@gmail.com", "yquqdmowgzpfkxpv");
                 smtp.EnableSsl = true;
                 // send mail
                 smtp.Send(message);
