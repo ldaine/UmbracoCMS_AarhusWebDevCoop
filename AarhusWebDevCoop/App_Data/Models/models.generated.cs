@@ -453,6 +453,120 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
+	/// <summary>test</summary>
+	[PublishedContentModel("test")]
+	public partial class Test : PublishedContentModel
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "test";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public Test(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Test, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+	}
+
+	/// <summary>test2</summary>
+	[PublishedContentModel("test2")]
+	public partial class Test2 : PublishedContentModel
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "test2";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public Test2(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Test2, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+	}
+
+	/// <summary>Messages</summary>
+	[PublishedContentModel("messages")]
+	public partial class Messages : PublishedContentModel
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "messages";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public Messages(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Messages, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Email
+		///</summary>
+		[ImplementPropertyType("email")]
+		public string Email
+		{
+			get { return this.GetPropertyValue<string>("email"); }
+		}
+
+		///<summary>
+		/// Message
+		///</summary>
+		[ImplementPropertyType("message")]
+		public string Message
+		{
+			get { return this.GetPropertyValue<string>("message"); }
+		}
+
+		///<summary>
+		/// Subject
+		///</summary>
+		[ImplementPropertyType("subject")]
+		public string Subject
+		{
+			get { return this.GetPropertyValue<string>("subject"); }
+		}
+
+		///<summary>
+		/// Name
+		///</summary>
+		[ImplementPropertyType("vmname")]
+		public string Vmname
+		{
+			get { return this.GetPropertyValue<string>("vmname"); }
+		}
+	}
+
 	/// <summary>Folder</summary>
 	[PublishedContentModel("Folder")]
 	public partial class Folder : PublishedContentModel

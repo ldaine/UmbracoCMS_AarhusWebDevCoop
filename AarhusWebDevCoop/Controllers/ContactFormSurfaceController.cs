@@ -6,11 +6,13 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using Umbraco.Web.Mvc;
+using Umbraco.Core.Models;
 
 namespace AarhusWebDevCoop.Controllers
 {
     public class ContactFormSurfaceController : SurfaceController
     {
+
         // GET: ContactFormSurface
         public ActionResult Index()
         {
@@ -50,8 +52,25 @@ namespace AarhusWebDevCoop.Controllers
                 }
 
             }
+            
+            //saving the message
+
+            IContent comment = Services.ContentService.CreateContent(model.Subject, CurrentPage.Id, "messages");
+
+            comment.SetValue("vmname", model.Name);
+            comment.SetValue("email", model.Email);
+            comment.SetValue("subject", model.Subject);
+            comment.SetValue("message", model.Message);
+
+            //save
+            Services.ContentService.Save(comment);
 
             return RedirectToCurrentUmbracoPage();
+
+
         }
+
+
+
     }
 }
