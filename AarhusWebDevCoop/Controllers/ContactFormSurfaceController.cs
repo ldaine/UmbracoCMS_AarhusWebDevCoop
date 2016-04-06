@@ -38,7 +38,17 @@ namespace AarhusWebDevCoop.Controllers
                 smtp.Credentials = new System.Net.NetworkCredential("cqtkbnns@gmail.com", "yquqdmowgzpfkxpv");
                 smtp.EnableSsl = true;
                 // send mail
-                smtp.Send(message);
+                try
+                {
+                    smtp.Send(message);
+                    TempData["success"] = true;
+                }
+                catch (SmtpException ex)
+                {
+                    var Message = ex.Message.ToString();
+                    // ex.FailedRecipient and ex.GetBaseException() should give you enough info.
+                }
+
             }
 
             return RedirectToCurrentUmbracoPage();
