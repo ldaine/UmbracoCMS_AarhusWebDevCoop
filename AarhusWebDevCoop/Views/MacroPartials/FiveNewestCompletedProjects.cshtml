@@ -3,9 +3,7 @@
 	<ul>
 	@{
 		var projects = CurrentPage.AncestorOrSelf(1).Children.Where("DocumentTypeAlias = \"projectsMain\"").First().Children.OrderBy("createDate desc");
-		
-		foreach(var page in projects.Take(5)){
-			
+		foreach(var page in projects){
 			var currentProjectStatus =  umbraco.library.GetPreValueAsString(page.projectStatus);
 							
 				if (currentProjectStatus == "Completed"){

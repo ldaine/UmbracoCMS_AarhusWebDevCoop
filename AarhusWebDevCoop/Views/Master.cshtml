@@ -50,12 +50,15 @@
 					<li class="@((CurrentPage.Name == root.Name) ? "active" : null)">
 						<a href="@root.Url">Home</a>
 					</li>
-
-					@foreach(var page in root.Children){
-						<li class="@(page.IsAncestorOrSelf(CurrentPage) ? "active": null)">
-							<a href="@page.Url">@page.Name</a>
-						</li>
-					}
+@foreach (var menuItem in root.Children.Where("Visible")) { 
+	var isProtected = umbraco.library.IsProtected(menuItem.id, menuItem.path); 
+	var loginAccess = umbraco.library.IsProtected(menuItem.id, menuItem.path) && umbraco.library.HasAccess(menuItem.id, menuItem.path);
+	if (!isProtected || loginAccess) { 
+		<li class="@(menuItem.IsAncestorOrSelf(CurrentPage) ? "active" : null)"> 
+			<a href="@menuItem.Url">@menuItem.Name</a> 
+		</li>
+	}
+}
 				  
 					<!-- DROP DOWN MENU-->
 					@{var umbracoDropdown = 
@@ -77,12 +80,12 @@
 					</a>
 					
 					<ul class="dropdown-menu">
-						@foreach(var page in umbracoDropdown){
+						@foreach (var menuItem in umbracoDropdown) { 
 							//Displaying only projects, which are completed
-							var test =  umbraco.library.GetPreValueAsString(page.projectStatus);
+							var test =  umbraco.library.GetPreValueAsString(menuItem.projectStatus);
 							
 							if (test == "Completed"){
-								<li><a href="@page.Url">@page.Name</a></li>
+								<li><a href="@menuItem.Url">@menuItem.Name</a></li>
 							}
 						}
 					  </ul>
