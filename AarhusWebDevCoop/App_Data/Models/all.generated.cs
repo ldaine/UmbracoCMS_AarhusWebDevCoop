@@ -580,6 +580,41 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
+	/// <summary>Error</summary>
+	[PublishedContentModel("error")]
+	public partial class Error : Master
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "error";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public Error(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Error, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Error Message
+		///</summary>
+		[ImplementPropertyType("errorMessage")]
+		public string ErrorMessage
+		{
+			get { return this.GetPropertyValue<string>("errorMessage"); }
+		}
+	}
+
 	/// <summary>Folder</summary>
 	[PublishedContentModel("Folder")]
 	public partial class Folder : PublishedContentModel
